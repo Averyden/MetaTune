@@ -10,7 +10,7 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'AudioUploader',
-  emits: ['file-uploaded'],
+  emits: ['fileUploaded', 'uploadError'],
   data() {
     return {
       errorMessage: '' as string,
@@ -25,12 +25,13 @@ export default defineComponent({
 
       if (!file.type.startsWith('audio/')) {
         this.errorMessage = 'Please upload a valid audio file.'
+        this.$emit('uploadError')
         return
       } else {
         this.errorMessage = ''
       }
 
-      this.$emit('file-uploaded', file)
+      this.$emit('fileUploaded', file)
     },
   },
 })

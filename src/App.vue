@@ -7,13 +7,14 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref} from "vue";
-import AudioUploader from "@/components/AudioUploader.vue"
+import { defineComponent, ref } from 'vue'
+import AudioUploader from '@/components/AudioUploader.vue'
 
 export default defineComponent({
-  name: "App",
+  name: 'App',
   components: {
-    AudioUploader
+    AudioUploader,
   },
-
+  setup() {},
 })
+</script>

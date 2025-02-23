@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <h1>MetaTune</h1>
-    <AudioUploader @file-uploaded="handleFile" />
+    <div class="uploader-container">
+      <AudioUploader @file-uploaded="handleFile" />
+    </div>
     <p v-if="uploadedFile">Uploaded: {{ uploadedFile.name }}</p>
   </div>
 </template>
@@ -21,6 +23,7 @@ export default defineComponent({
     const handleFile = (file: File) => {
       uploadedFile.value = file
     }
+
     return { uploadedFile, handleFile }
   },
 })
@@ -30,6 +33,13 @@ export default defineComponent({
 #app {
   font-family: Arial, sans-serif; /*TODO: Import roboto instead of arial*/
   text-align: center;
+  margin-top: 20px;
+}
+
+.uploader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-top: 20px;
 }
 </style>

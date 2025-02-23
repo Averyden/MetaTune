@@ -31,7 +31,7 @@ export default defineComponent({
 
 <style>
 #app {
-  font-family: Arial, sans-serif; /*TODO: Import roboto instead of arial*/
+  font-family: 'Roboto', sans-serif;
   text-align: center;
   margin-top: 20px;
 }

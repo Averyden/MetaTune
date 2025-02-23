@@ -33,3 +33,15 @@ export default defineComponent({
   },
 })
 </script>
+
+<style scoped>
+.audioUploader {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.error {
+  color: red;
+  font-size: 14px;
+}
+</style>

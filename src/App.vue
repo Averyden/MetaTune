@@ -5,6 +5,7 @@
       <AudioUploader @file-uploaded="handleFile" />
     </div>
     <p v-if="uploadedFile">Uploaded: {{ uploadedFile.name }}</p>
+    <!-- <AudioPlayer v-if="audioUrl"> -->
   </div>
 </template>
 
@@ -17,15 +18,18 @@ export default defineComponent({
   name: 'App',
   components: {
     AudioUploader,
+    AudioPlayer,
   },
   setup() {
     const uploadedFile = ref<File | null>(null)
+    const audioUrl = ref<string | null>(null)
 
     const handleFile = (file: File) => {
       uploadedFile.value = file
+      audioUrl.value = URL.createObjectURL(file)
     }
 
-    return { uploadedFile, handleFile }
+    return { uploadedFile, handleFile, audioUrl }
   },
 })
 </script>

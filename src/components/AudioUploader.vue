@@ -9,7 +9,7 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'AudioUploader',
-  emits: ['file-upload'],
+  emits: ['file-uploaded'],
 
   methods: {
     handleFileUpload(event: Event) {
@@ -20,6 +20,8 @@ export default defineComponent({
       if (!file.type.startsWith('audio/')) {
         //TODO: make some sort of error message here.
       }
+
+      this.$emit('file-uploaded', file)
     },
   },
 })

@@ -26,6 +26,8 @@ export default defineComponent({
       if (!file.type.startsWith('audio/')) {
         this.errorMessage = 'Please upload a valid audio file.'
         return
+      } else {
+        this.errorMessage = ''
       }
 
       this.$emit('file-uploaded', file)

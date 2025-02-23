@@ -2,9 +2,11 @@
   <div id="app">
     <h1>MetaTune</h1>
     <div class="uploader-container">
-      <AudioUploader @file-uploaded="handleFile" />
+      <AudioUploader @fileUploaded="handleFile" @uploadError="handleError" />
     </div>
     <p v-if="uploadedFile">Uploaded: {{ uploadedFile.name }}</p>
+    <p v-if="error" class="errorMessage">{{ error }}</p>
+
     <AudioPlayer v-if="audioUrl" :src="audioUrl" />
   </div>
 </template>
@@ -23,13 +25,20 @@ export default defineComponent({
   setup() {
     const uploadedFile = ref<File | null>(null)
     const audioUrl = ref<string | null>(null)
+    const error = ref<string | null>(null)
 
     const handleFile = (file: File) => {
       uploadedFile.value = file
       audioUrl.value = URL.createObjectURL(file)
     }
 
-    return { uploadedFile, handleFile, audioUrl }
+    const handleError = (message: string) => {
+      error.value = message
+      uploadedFile.value = null
+      audioUrl.value = null
+    }
+
+    return { uploadedFile, handleFile, audioUrl, error, handleError }
   },
 })
 </script>
@@ -46,5 +55,9 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   margin-top: 20px;
+}
+.errorMessage {
+  color: red;
+  font-size: 14px;
 }
 </style>

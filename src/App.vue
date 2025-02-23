@@ -5,7 +5,7 @@
       <AudioUploader @file-uploaded="handleFile" />
     </div>
     <p v-if="uploadedFile">Uploaded: {{ uploadedFile.name }}</p>
-    <!-- <AudioPlayer v-if="audioUrl"> -->
+    <AudioPlayer v-if="audioUrl" :src="audioUrl" />
   </div>
 </template>
 

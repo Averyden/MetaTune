@@ -11,6 +11,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 import AudioUploader from '@/components/AudioUploader.vue'
+import AudioPlayer from './components/AudioPlayer.vue'
 
 export default defineComponent({
   name: 'App',

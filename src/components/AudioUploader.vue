@@ -38,6 +38,7 @@ export default defineComponent({
 
 <style scoped>
 .audioUploader {
+  color: white;
   display: flex;
   flex-direction: column;
   gap: 8px;

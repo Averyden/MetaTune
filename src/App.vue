@@ -15,6 +15,13 @@ export default defineComponent({
   components: {
     AudioUploader,
   },
-  setup() {},
+  setup() {
+    const uploadedFile = ref<File | null>(null)
+
+    const handleFile = (file: File) => {
+      uploadedFile.value = file
+    }
+    return { uploadedFile, handleFile }
+  },
 })
 </script>

@@ -1,7 +1,6 @@
 <template>
   <div class="audioUploader">
     <input type="file" @change="handleFileUpload" accept="audio/*" />
-    <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
   </div>
 </template>
 
@@ -10,7 +9,7 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'AudioUploader',
-  emits: ['file-uploaded'],
+  emits: ['fileUploaded', 'uploadError'],
   data() {
     return {
       errorMessage: '' as string,
@@ -25,12 +24,13 @@ export default defineComponent({
 
       if (!file.type.startsWith('audio/')) {
         this.errorMessage = 'Please upload a valid audio file.'
+        this.$emit('uploadError', this.errorMessage)
         return
       } else {
         this.errorMessage = ''
       }
 
-      this.$emit('file-uploaded', file)
+      this.$emit('fileUploaded', file)
     },
   },
 })
@@ -42,9 +42,5 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   gap: 8px;
-}
-.error {
-  color: red;
-  font-size: 14px;
 }
 </style>

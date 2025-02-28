@@ -15,12 +15,14 @@
 import { defineComponent, ref } from 'vue'
 import AudioUploader from '@/components/AudioUploader.vue'
 import AudioPlayer from './components/AudioPlayer.vue'
+import MetaDataViewer from './components/MetaDataViewer.vue';
 
 export default defineComponent({
   name: 'App',
   components: {
     AudioUploader,
     AudioPlayer,
+    MetaDataViewer,
   },
   setup() {
     const uploadedFile = ref<File | null>(null)

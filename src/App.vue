@@ -8,6 +8,7 @@
     <p v-if="error" class="errorMessage">{{ error }}</p>
 
     <AudioPlayer v-if="audioUrl" :src="audioUrl" />
+    <MetaDataViewer/>
   </div>
 </template>
 

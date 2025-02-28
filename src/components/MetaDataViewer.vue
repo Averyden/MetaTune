@@ -1,5 +1,5 @@
 <template>
-
+<img src="../assets/placeholder.png">
 </template>
 
 <script lang="ts">

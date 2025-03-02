@@ -28,3 +28,13 @@ export default defineComponent({
   // TODO: Just slowly implement whatever over time
 })
 </script>
+
+<style>
+.metadata-viewer {
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  display: inline-block;
+}
+</style>

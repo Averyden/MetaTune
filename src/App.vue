@@ -46,6 +46,14 @@ export default defineComponent({
         audioUrl.value = URL.createObjectURL(file)
 
         const extractedData = await mm.parseBlob(file)
+        let coverUrl = null
+
+        if (extractedData.common.picture && extractedData.common.picture.length > 0) {
+          const picture = extractedData.common.picture[0]
+          const blob = new Blob([new Uint8Array(picture.data)], { type: picture.format })
+          coverUrl = URL.createObjectURL(blob)
+        }
+
         metadata.value = {
           title: extractedData.common.title || 'Unknown Title',
           artist: extractedData.common.artist || 'Unknown Artist',
@@ -54,6 +62,7 @@ export default defineComponent({
             no: extractedData.common.track?.no ?? undefined,
             of: extractedData.common.track?.of ?? undefined,
           },
+          coverUrl: coverUrl ?? '../src/assets/noIcon.png',
         }
       } catch (err) {
         error.value = 'Failed to parse metadata'

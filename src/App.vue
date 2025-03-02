@@ -15,6 +15,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
+import * as mm from 'music-metadata'
 import AudioUploader from '@/components/AudioUploader.vue'
 import AudioPlayer from './components/AudioPlayer.vue'
 import MetaDataViewer from './components/MetaDataViewer.vue'
@@ -30,6 +31,12 @@ export default defineComponent({
     const uploadedFile = ref<File | null>(null)
     const audioUrl = ref<string | null>(null)
     const error = ref<string | null>(null)
+    const metadata = ref<{
+      title?: string
+      artist?: string
+      album?: string
+      track?: { no?: number }
+    }>({})
 
     const handleFile = (file: File) => {
       uploadedFile.value = file

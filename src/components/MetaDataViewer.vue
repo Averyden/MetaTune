@@ -6,7 +6,10 @@
     <p><strong>Album:</strong> {{ metadata.album }}</p>
     <p><strong>Track:</strong> {{ metadata.track?.no }}</p>
 
+    <button @click="showAll = !showAll">{{ showAll ? 'Hide' : 'Show Full Metadata' }}</button>
+    <pre v-if="showAll">{{ metadata }}</pre>
     <img src="../assets/placeholder.png" />
+    <!--TODO: Find out if the metadata fetches it.-->
   </div>
 </template>
 

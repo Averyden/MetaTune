@@ -62,7 +62,7 @@ export default defineComponent({
             no: extractedData.common.track?.no ?? undefined,
             of: extractedData.common.track?.of ?? undefined,
           },
-          coverUrl: coverUrl ?? '../src/assets/noIcon.png',
+          coverUrl: coverUrl ?? '',
         }
       } catch (err) {
         error.value = 'Failed to parse metadata'

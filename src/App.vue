@@ -8,28 +8,67 @@
     <p v-if="error" class="errorMessage">{{ error }}</p>
 
     <AudioPlayer v-if="audioUrl" :src="audioUrl" />
+    <MetaDataViewer v-if="uploadedFile" :metadata="metadata" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
+import * as mm from 'music-metadata'
 import AudioUploader from '@/components/AudioUploader.vue'
 import AudioPlayer from './components/AudioPlayer.vue'
+import MetaDataViewer from './components/MetaDataViewer.vue'
 
 export default defineComponent({
   name: 'App',
   components: {
     AudioUploader,
     AudioPlayer,
+    MetaDataViewer,
   },
   setup() {
     const uploadedFile = ref<File | null>(null)
     const audioUrl = ref<string | null>(null)
     const error = ref<string | null>(null)
+    const metadata = ref<{
+      title?: string
+      artist?: string
+      album?: string
+      track?: { no?: number; of?: number }
+      coverUrl?: string
+    }>({})
 
-    const handleFile = (file: File) => {
-      uploadedFile.value = file
-      audioUrl.value = URL.createObjectURL(file)
+    const handleFile = async (file: File) => {
+      try {
+        error.value = null
+        uploadedFile.value = file
+        audioUrl.value = URL.createObjectURL(file)
+
+        const extractedData = await mm.parseBlob(file)
+        let coverUrl = null
+
+        if (extractedData.common.picture && extractedData.common.picture.length > 0) {
+          const picture = extractedData.common.picture[0]
+          const blob = new Blob([new Uint8Array(picture.data)], { type: picture.format })
+          coverUrl = URL.createObjectURL(blob)
+        }
+
+        metadata.value = {
+          title: extractedData.common.title || 'Unknown Title',
+          artist: extractedData.common.artist || 'Unknown Artist',
+          album: extractedData.common.album || 'Unknown Album',
+          track: {
+            no: extractedData.common.track?.no ?? undefined,
+            of: extractedData.common.track?.of ?? undefined,
+          },
+          coverUrl: coverUrl ?? '',
+        }
+      } catch (err) {
+        error.value = 'Failed to parse metadata'
+        uploadedFile.value = null
+        audioUrl.value = null
+        metadata.value = {}
+      }
     }
 
     const handleError = (message: string) => {
@@ -38,7 +77,7 @@ export default defineComponent({
       audioUrl.value = null
     }
 
-    return { uploadedFile, handleFile, audioUrl, error, handleError }
+    return { uploadedFile, handleFile, audioUrl, error, handleError, metadata }
   },
 })
 </script>

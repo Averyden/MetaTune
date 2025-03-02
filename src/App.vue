@@ -9,7 +9,6 @@
 
     <AudioPlayer v-if="audioUrl" :src="audioUrl" />
     <MetaDataViewer v-if="uploadedFile" :metadata="metadata" />
-    <!--! This is only to ensure the component works before i work on it at home :D -->
   </div>
 </template>
 

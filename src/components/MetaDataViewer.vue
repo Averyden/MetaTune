@@ -6,8 +6,11 @@
     <p><strong>Album:</strong> {{ metadata.album }}</p>
     <p><strong>Track:</strong> {{ metadata.track?.no }}</p>
 
+    <!-- TODO: implement this button later :D -->
+
     <!-- <button @click="showAll = !showAll">{{ showAll ? 'Hide' : 'Show Full Metadata' }}</button>
     <pre v-if="showAll">{{ metadata }}</pre> -->
+
     <img v-if="metadata.coverUrl" :src="metadata.coverUrl" alt="Album Cover" class="albumCover" />
     <img v-else src="../assets/noIcon.png" alt="Placeholder Cover" class="albumCover" />
   </div>

@@ -8,7 +8,8 @@
     <p v-if="error" class="errorMessage">{{ error }}</p>
 
     <AudioPlayer v-if="audioUrl" :src="audioUrl" />
-    <MetaDataViewer/> <!--! This is only to ensure the component works before i work on it at home :D -->
+    <MetaDataViewer v-if="uploadedFile" />
+    <!--! This is only to ensure the component works before i work on it at home :D -->
   </div>
 </template>
 
@@ -16,7 +17,7 @@
 import { defineComponent, ref } from 'vue'
 import AudioUploader from '@/components/AudioUploader.vue'
 import AudioPlayer from './components/AudioPlayer.vue'
-import MetaDataViewer from './components/MetaDataViewer.vue';
+import MetaDataViewer from './components/MetaDataViewer.vue'
 
 export default defineComponent({
   name: 'App',

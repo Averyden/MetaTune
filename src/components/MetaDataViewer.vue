@@ -11,12 +11,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
   name: 'MetaDataViewer',
   props: {
     metadata: Object,
+  },
+  setup() {
+    const showAll = ref(false)
+    return { showAll }
   },
   // TODO: Just slowly implement whatever over time
 })

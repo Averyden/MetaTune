@@ -51,7 +51,12 @@ export default defineComponent({
           album: extractedData.common.album || 'Unknown Album',
           track: { no: extractedData.common.track?.no ?? undefined },
         }
-      } catch (err) {}
+      } catch (err) {
+        error.value = 'Failed to parse metadata'
+        uploadedFile.value = null
+        audioUrl.value = null
+        metadata.value = {}
+      }
     }
 
     const handleError = (message: string) => {

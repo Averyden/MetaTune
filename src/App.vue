@@ -50,7 +50,10 @@ export default defineComponent({
           title: extractedData.common.title || 'Unknown Title',
           artist: extractedData.common.artist || 'Unknown Artist',
           album: extractedData.common.album || 'Unknown Album',
-          track: { no: extractedData.common.track?.no ?? undefined },
+          track: {
+            no: extractedData.common.track?.no ?? undefined,
+            of: extractedData.common.track?.of ?? undefined,
+          },
         }
       } catch (err) {
         error.value = 'Failed to parse metadata'

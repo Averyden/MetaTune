@@ -38,9 +38,20 @@ export default defineComponent({
       track?: { no?: number }
     }>({})
 
-    const handleFile = (file: File) => {
-      uploadedFile.value = file
-      audioUrl.value = URL.createObjectURL(file)
+    const handleFile = async (file: File) => {
+      try {
+        error.value = null
+        uploadedFile.value = file
+        audioUrl.value = URL.createObjectURL(file)
+
+        const extractedData = await mm.parseBlob(file)
+        metadata.value = {
+          title: extractedData.common.title || 'Unknown Title',
+          artist: extractedData.common.artist || 'Unknown Artist',
+          album: extractedData.common.album || 'Unknown Album',
+          track: { no: extractedData.common.track?.no ?? undefined },
+        }
+      } catch (err) {}
     }
 
     const handleError = (message: string) => {

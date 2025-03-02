@@ -8,7 +8,7 @@
     <p v-if="error" class="errorMessage">{{ error }}</p>
 
     <AudioPlayer v-if="audioUrl" :src="audioUrl" />
-    <MetaDataViewer v-if="uploadedFile" />
+    <MetaDataViewer v-if="uploadedFile" :metadata="metadata" />
     <!--! This is only to ensure the component works before i work on it at home :D -->
   </div>
 </template>
@@ -65,7 +65,7 @@ export default defineComponent({
       audioUrl.value = null
     }
 
-    return { uploadedFile, handleFile, audioUrl, error, handleError }
+    return { uploadedFile, handleFile, audioUrl, error, handleError, metadata }
   },
 })
 </script>

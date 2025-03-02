@@ -35,7 +35,8 @@ export default defineComponent({
       title?: string
       artist?: string
       album?: string
-      track?: { no?: number }
+      track?: { no?: number; of?: number }
+      coverUrl?: string
     }>({})
 
     const handleFile = async (file: File) => {

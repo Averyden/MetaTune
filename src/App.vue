@@ -86,7 +86,16 @@ export default defineComponent({
       isEditing.value = false
     }
 
-    return { uploadedFile, handleFile, audioUrl, error, handleError, metadata }
+    return {
+      uploadedFile,
+      handleFile,
+      audioUrl,
+      error,
+      handleError,
+      metadata,
+      isEditing,
+      updateMetadata,
+    }
   },
 })
 </script>

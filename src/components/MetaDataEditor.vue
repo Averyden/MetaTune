@@ -3,7 +3,6 @@
     <div class="modalContent">
       <h2>Editing Metadata</h2>
       <label>Title:</label>
-      <!--TODO: bind the v-model types properly thanks-->
       <input v-model="editableMetaData.title" type="text" />
 
       <label>Artist:</label>

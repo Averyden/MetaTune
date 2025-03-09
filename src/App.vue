@@ -37,6 +37,7 @@ export default defineComponent({
     MetaDataViewer,
     MetaDataEditor,
   },
+
   setup() {
     const uploadedFile = ref<File | null>(null)
     const audioUrl = ref<string | null>(null)

@@ -39,3 +39,31 @@ export default defineComponent({
   },
 })
 </script>
+
+<style>
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContent {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.modalContent input {
+  display: block;
+  margin: 10px 0;
+  padding: 5px;
+  width: 80%;
+}
+</style>

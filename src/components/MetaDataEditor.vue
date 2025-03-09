@@ -101,4 +101,8 @@ input {
   font-size: 16px;
   transition: 0.3s;
 }
+
+.btnSave:hover {
+  background: #45a049;
+}
 </style>

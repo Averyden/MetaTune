@@ -78,11 +78,14 @@ label {
 }
 
 input {
-  width: 100%;
+  display: block;
+  align-items: left;
+  width: 95%;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 16px;
+  margin-bottom: 20px;
 }
 
 .buttonGroup {
@@ -104,5 +107,20 @@ input {
 
 .btnSave:hover {
   background: #45a049;
+}
+
+.btnClose {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.btnClose:hover {
+  background: #c0392b;
 }
 </style>

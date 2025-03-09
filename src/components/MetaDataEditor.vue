@@ -11,7 +11,7 @@
       <label>Album:</label>
       <input v-model="editableMetaData.album" type="text" />
 
-      <button>Save</button>
+      <button @click="saveChanges">Save</button>
       <button>Cancel</button>
     </div>
   </div>

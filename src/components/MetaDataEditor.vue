@@ -18,4 +18,24 @@
   </div>
 </template>
 
-<script lang="ts"></script>
+<script lang="ts">
+import { defineComponent, ref, watch } from 'vue'
+
+export default defineComponent({
+  name: 'MetaDataEditor',
+  props: ['metadata'],
+  setup(props, { emit }) {
+    const editableMetaData = ref({ ...props.metadata })
+
+    watch(props.metadata, (newVal) => {
+      editableMetaData.value = { ...newVal }
+    })
+
+    const saveChanges = () => {
+      emit('save', editableMetaData.value)
+    }
+
+    return { editableMetaData, saveChanges }
+  },
+})
+</script>

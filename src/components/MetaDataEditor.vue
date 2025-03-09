@@ -84,4 +84,10 @@ input {
   border-radius: 6px;
   font-size: 16px;
 }
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
 </style>

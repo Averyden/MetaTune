@@ -70,6 +70,13 @@ export default defineComponent({
   margin-bottom: 10px;
 }
 
+label {
+  display: block;
+  text-align: left;
+  font-weight: bold;
+  margin: 10px 0 5px;
+}
+
 .modalContent input {
   display: block;
   margin: 10px 0;

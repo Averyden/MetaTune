@@ -19,6 +19,7 @@ import * as mm from 'music-metadata'
 import AudioUploader from '@/components/AudioUploader.vue'
 import AudioPlayer from './components/AudioPlayer.vue'
 import MetaDataViewer from './components/MetaDataViewer.vue'
+import MetaDataEditor from './components/MetaDataEditor.vue'
 
 export default defineComponent({
   name: 'App',
@@ -26,11 +27,13 @@ export default defineComponent({
     AudioUploader,
     AudioPlayer,
     MetaDataViewer,
+    MetaDataEditor,
   },
   setup() {
     const uploadedFile = ref<File | null>(null)
     const audioUrl = ref<string | null>(null)
     const error = ref<string | null>(null)
+    const isEditing = ref(false)
     const metadata = ref<{
       title?: string
       artist?: string

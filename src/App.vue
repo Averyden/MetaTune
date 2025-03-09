@@ -81,6 +81,11 @@ export default defineComponent({
       audioUrl.value = null
     }
 
+    const updateMetadata = (newMetadata: any) => {
+      metadata.value = { ...metadata.value, ...newMetadata }
+      isEditing.value = false
+    }
+
     return { uploadedFile, handleFile, audioUrl, error, handleError, metadata }
   },
 })

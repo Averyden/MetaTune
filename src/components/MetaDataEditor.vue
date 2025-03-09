@@ -12,7 +12,7 @@
       <input v-model="editableMetaData.album" type="text" />
 
       <button @click="saveChanges">Save</button>
-      <button>Cancel</button>
+      <button @click="$emit('close')">Cancel</button>
     </div>
   </div>
 </template>

@@ -12,8 +12,8 @@
       <input v-model="editableMetaData.album" type="text" />
 
       <div class="buttonGroup">
-        <button @click="saveChanges">Save</button>
-        <button @click="$emit('close')">Cancel</button>
+        <button class="btnSave" @click="saveChanges">Save</button>
+        <button class="btnClose" @click="$emit('close')">Cancel</button>
       </div>
     </div>
   </div>
@@ -89,5 +89,16 @@ input {
   display: flex;
   justify-content: space-between;
   margin-top: 15px;
+}
+
+.btnSave {
+  background: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s;
 }
 </style>

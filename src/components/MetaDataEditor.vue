@@ -77,10 +77,11 @@ label {
   margin: 10px 0 5px;
 }
 
-.modalContent input {
-  display: block;
-  margin: 10px 0;
-  padding: 5px;
-  width: 80%;
+input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
 }
 </style>

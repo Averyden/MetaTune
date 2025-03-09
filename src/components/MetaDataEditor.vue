@@ -91,7 +91,7 @@ input {
 .buttonGroup {
   display: flex;
   justify-content: space-between;
-  margin-top: 15px;
+  padding-top: 15px;
 }
 
 .btnSave {

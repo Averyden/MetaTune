@@ -9,7 +9,15 @@
 
     <AudioPlayer v-if="audioUrl" :src="audioUrl" />
     <MetaDataViewer v-if="uploadedFile" :metadata="metadata" />
+
     <button v-if="uploadedFile">Edit Metadata</button>
+
+    <MetaDataEditor
+      v-if="isEditing"
+      :metadata="metadata"
+      @close="isEditing = false"
+      @save="updateMetadata"
+    />
   </div>
 </template>
 

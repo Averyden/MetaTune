@@ -4,13 +4,13 @@
       <h2>Editing Metadata</h2>
       <label>Title:</label>
       <!--TODO: bind the v-model types properly thanks-->
-      <input v-model="title" type="text" />
+      <input v-model="editableMetaData.title" type="text" />
 
       <label>Artist:</label>
-      <input v-model="artist" type="text" />
+      <input v-model="editableMetaData.artist" type="text" />
 
       <label>Album:</label>
-      <input v-model="album" type="text" />
+      <input v-model="editableMetaData.album" type="text" />
 
       <button>Save</button>
       <button>Cancel</button>

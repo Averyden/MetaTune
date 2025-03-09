@@ -85,7 +85,7 @@ input {
   font-size: 16px;
 }
 
-.button-group {
+.buttonGroup {
   display: flex;
   justify-content: space-between;
   margin-top: 15px;

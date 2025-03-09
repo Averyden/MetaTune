@@ -42,6 +42,7 @@ export default defineComponent({
 </script>
 
 <style>
+/* TODO: Stylize this like the notesu popup :D */
 .modal {
   position: fixed;
   top: 0;

@@ -9,6 +9,15 @@
 
     <AudioPlayer v-if="audioUrl" :src="audioUrl" />
     <MetaDataViewer v-if="uploadedFile" :metadata="metadata" />
+
+    <button v-if="uploadedFile" @click="isEditing = true">Edit Metadata</button>
+
+    <MetaDataEditor
+      v-if="isEditing"
+      :metadata="metadata"
+      @close="isEditing = false"
+      @save="updateMetadata"
+    />
   </div>
 </template>
 
@@ -18,6 +27,7 @@ import * as mm from 'music-metadata'
 import AudioUploader from '@/components/AudioUploader.vue'
 import AudioPlayer from './components/AudioPlayer.vue'
 import MetaDataViewer from './components/MetaDataViewer.vue'
+import MetaDataEditor from './components/MetaDataEditor.vue'
 
 export default defineComponent({
   name: 'App',
@@ -25,11 +35,14 @@ export default defineComponent({
     AudioUploader,
     AudioPlayer,
     MetaDataViewer,
+    MetaDataEditor,
   },
+
   setup() {
     const uploadedFile = ref<File | null>(null)
     const audioUrl = ref<string | null>(null)
     const error = ref<string | null>(null)
+    const isEditing = ref(false)
     const metadata = ref<{
       title?: string
       artist?: string
@@ -77,7 +90,21 @@ export default defineComponent({
       audioUrl.value = null
     }
 
-    return { uploadedFile, handleFile, audioUrl, error, handleError, metadata }
+    const updateMetadata = (newMetadata: any) => {
+      metadata.value = { ...metadata.value, ...newMetadata }
+      isEditing.value = false
+    }
+
+    return {
+      uploadedFile,
+      handleFile,
+      audioUrl,
+      error,
+      handleError,
+      metadata,
+      isEditing,
+      updateMetadata,
+    }
   },
 })
 </script>

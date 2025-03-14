@@ -72,18 +72,23 @@ export default defineComponent({
   position: relative;
   background: #FFF;
   border-radius: 10px;
-  width: 35%;
   height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   animation: slide-down 0.3s ease forwards;
+  padding: 20px;
+  width: 90%;
+  max-width: 400px;
 }
 
 .modalContent h2 {
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  font-size: 25px;
+  text-align: center;
+  padding: 10px;
   color: black;
-  font-size: 24px;
-  margin-bottom: 10px;
 }
 
 label {

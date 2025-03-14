@@ -55,14 +55,29 @@ export default defineComponent({
   align-items: center;
 }
 
+@keyframes slide-down {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+        visibility: visible;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
 .modalContent {
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  text-align: center;
-  width: 90%;
-  max-width: 400px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  margin: auto;
+  position: relative;
+  background: #FFF;
+  border-radius: 10px;
+  width: 35%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: slide-down 0.3s ease forwards;
 }
 
 .modalContent h2 {

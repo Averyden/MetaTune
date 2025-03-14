@@ -92,6 +92,8 @@ export default defineComponent({
 }
 
 label {
+  font-family: 'Roboto', sans-serif;
+  color: #2e2e2e;
   display: block;
   text-align: left;
   font-weight: bold;

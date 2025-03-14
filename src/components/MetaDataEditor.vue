@@ -101,14 +101,18 @@ label {
 }
 
 input {
-  display: block;
-  align-items: left;
-  width: 95%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 16px;
-  margin-bottom: 20px;
+  font-family: 'Roboto', sans-serif;
+    color: #2e2e2e;
+    background-color: #B0B0B0;
+    font-size: 15px;
+    padding: 16px;
+    text-align: center;
+    border-radius: 15px;
+    width: 70%;
+    height: 7%;
+    resize: none;
+    border: none;
+    overflow: hidden;
 }
 
 .buttonGroup {
@@ -117,33 +121,28 @@ input {
   padding-top: 15px;
 }
 
-.btnSave {
-  background: #4caf50;
-  color: white;
+.buttonGroup .btnSave, 
+.buttonGroup .btnClose{
+  margin: 8px;
+  min-width: 75px;
+  width: auto;
+  height: 30px;
   border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
+  border-radius: 15px;
+  font-family: 'Roboto', sans-serif;
+  font-size: auto;
+  transition: background 0.3s;
   cursor: pointer;
-  font-size: 16px;
-  transition: 0.3s;
+}
+
+.btnSave {
+  background-color: #f13ce8;
+  color: #FFF;
+  transition: background 0.3s;
 }
 
 .btnSave:hover {
-  background: #45a049;
+  background: #d823cf;
 }
 
-.btnClose {
-  background: #e74c3c;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: 0.3s;
-}
-
-.btnClose:hover {
-  background: #c0392b;
-}
 </style>

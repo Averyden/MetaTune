@@ -55,22 +55,36 @@ export default defineComponent({
   align-items: center;
 }
 
+@keyframes slide-up {
+  0% {
+    transform: translateY(0);
+  }
+  95% {
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(-100%);
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
 @keyframes slide-down {
-    0% {
-        transform: translateY(-100%);
-        opacity: 0;
-        visibility: visible;
-    }
-    100% {
-        transform: translateY(0);
-        opacity: 1;
-    }
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: visible;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .modalContent {
   margin: auto;
   position: relative;
-  background: #FFF;
+  background: #fff;
   border-radius: 10px;
   height: auto;
   display: flex;
@@ -102,17 +116,17 @@ label {
 
 input {
   font-family: 'Roboto', sans-serif;
-    color: #2e2e2e;
-    background-color: #B0B0B0;
-    font-size: 15px;
-    padding: 16px;
-    text-align: center;
-    border-radius: 15px;
-    width: 70%;
-    height: 7%;
-    resize: none;
-    border: none;
-    overflow: hidden;
+  color: #2e2e2e;
+  background-color: #b0b0b0;
+  font-size: 15px;
+  padding: 16px;
+  text-align: center;
+  border-radius: 15px;
+  width: 70%;
+  height: 7%;
+  resize: none;
+  border: none;
+  overflow: hidden;
 }
 
 .buttonGroup {
@@ -121,8 +135,8 @@ input {
   padding-top: 15px;
 }
 
-.buttonGroup .btnSave, 
-.buttonGroup .btnClose{
+.buttonGroup .btnSave,
+.buttonGroup .btnClose {
   margin: 8px;
   min-width: 75px;
   width: auto;
@@ -137,12 +151,11 @@ input {
 
 .btnSave {
   background-color: #f13ce8;
-  color: #FFF;
+  color: #fff;
   transition: background 0.3s;
 }
 
 .btnSave:hover {
   background: #d823cf;
 }
-
 </style>

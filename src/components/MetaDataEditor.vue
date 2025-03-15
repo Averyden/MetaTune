@@ -13,7 +13,7 @@
 
       <div class="buttonGroup">
         <button class="btnSave" @click="saveChanges">Save</button>
-        <button class="btnClose" @click="$emit('close')">Cancel</button>
+        <button class="btnClose" @click="closeModal">Cancel</button>
       </div>
     </div>
   </div>
@@ -34,8 +34,10 @@ export default defineComponent({
     })
 
     const saveChanges = () => {
-      emit('save', editableMetaData.value)
       closeModal()
+      setTimeout(() => {
+        emit('save', editableMetaData.value)
+      }, 300)
     }
 
     const closeModal = () => {

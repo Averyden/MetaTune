@@ -109,6 +109,10 @@ export default defineComponent({
   max-width: 400px;
 }
 
+.modalContent.closing {
+  animation: slide-up 0.3s ease forwards;
+}
+
 .modalContent h2 {
   font-family: 'Roboto', sans-serif;
   font-weight: bold;

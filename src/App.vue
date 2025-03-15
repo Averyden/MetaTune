@@ -13,10 +13,11 @@
     <button v-if="uploadedFile" @click="isEditing = true">Edit Metadata</button>
 
     <MetaDataEditor
-      v-if="isEditing"
+      v-show="isEditing"
       :metadata="metadata"
-      @close="isEditing = false"
+      :visible="isEditing"
       @save="updateMetadata"
+      @close="isEditing = false"
     />
   </div>
 </template>

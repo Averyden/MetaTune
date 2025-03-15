@@ -68,7 +68,7 @@ export default defineComponent({
   align-items: center;
 }
 
-@keyframes slide-up {
+@keyframes slideUp {
   0% {
     transform: translateY(0);
   }
@@ -82,7 +82,7 @@ export default defineComponent({
   }
 }
 
-@keyframes slide-down {
+@keyframes slideDown {
   0% {
     transform: translateY(-100%);
     opacity: 0;
@@ -103,14 +103,14 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   align-items: center;
-  animation: slide-down 0.3s ease forwards;
+  animation: slideDown 0.3s ease forwards;
   padding: 20px;
   width: 90%;
   max-width: 400px;
 }
 
 .modalContent.closing {
-  animation: slide-up 0.3s ease forwards;
+  animation: slideUp 0.3s ease forwards;
 }
 
 .modalContent h2 {

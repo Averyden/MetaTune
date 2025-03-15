@@ -1,6 +1,6 @@
 <template>
-  <div class="modal">
-    <div class="modalContent">
+  <div class="modal" v-if="visible">
+    <div class="modalContent" :class="{ closing: isClosing }" @animationend="handleAnimationEnd">
       <h2>Editing Metadata</h2>
       <label>Title:</label>
       <input v-model="editableMetaData.title" type="text" />
@@ -24,9 +24,10 @@ import { defineComponent, ref, watch } from 'vue'
 
 export default defineComponent({
   name: 'MetaDataEditor',
-  props: ['metadata'],
+  props: ['metadata', 'visible'],
   setup(props, { emit }) {
     const editableMetaData = ref({ ...props.metadata })
+    const isClosing = ref(false)
 
     watch(props.metadata, (newVal) => {
       editableMetaData.value = { ...newVal }
@@ -34,9 +35,21 @@ export default defineComponent({
 
     const saveChanges = () => {
       emit('save', editableMetaData.value)
+      closeModal()
     }
 
-    return { editableMetaData, saveChanges }
+    const closeModal = () => {
+      isClosing.value = true
+    }
+
+    const handleAnimationEnd = () => {
+      if (isClosing.value) {
+        emit('close')
+        isClosing.value = false
+      }
+    }
+
+    return { editableMetaData, saveChanges, closeModal, isClosing, handleAnimationEnd }
   },
 })
 </script>

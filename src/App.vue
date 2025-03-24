@@ -110,6 +110,8 @@ export default defineComponent({
       const fileBuffer = await uploadedFile.value.arrayBuffer()
       const metadataEditor = new Uint8Array(fileBuffer)
 
+      //TODO: Properly write the updated metadata into the file
+
       updatedBlob.value = new Blob([metadataEditor], { type: uploadedFile.value.type })
     }
 
@@ -119,7 +121,7 @@ export default defineComponent({
       const url = URL.createObjectURL(updatedBlob.value)
       const a = document.createElement('a')
       a.href = url
-      a.download = 'FUCKKK' //`${uploadedFile.value.name}_new`
+      a.download = `${uploadedFile.value.name}_new`
       a.click()
       URL.revokeObjectURL(url)
     }

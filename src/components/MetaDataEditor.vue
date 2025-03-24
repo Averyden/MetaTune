@@ -14,8 +14,8 @@
       <label>Album Cover:</label>
       <input type="file" accept="image/*" @change="handleImageUpload" />
 
-      <div v-if="editableMetaData.coverArt">
-        <img :src="editableMetaData.coverArt" class="coverPreview" />
+      <div v-if="editableMetaData.coverUrl">
+        <img :src="editableMetaData.coverUrl" class="coverPreview" />
       </div>
 
       <div class="buttonGroup">
@@ -45,7 +45,7 @@ export default defineComponent({
       if (file) {
         const reader = new FileReader()
         reader.onload = () => {
-          editableMetaData.value.coverArt = reader.result as string
+          editableMetaData.value.coverUrl = reader.result as string
         }
         reader.readAsDataURL(file)
       }

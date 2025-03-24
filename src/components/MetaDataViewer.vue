@@ -33,4 +33,11 @@ export default defineComponent({
   border-radius: 8px;
   display: inline-block;
 }
+
+.albumCover {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 10px;
+  margin-top: 10px;
+}
 </style>

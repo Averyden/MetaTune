@@ -12,7 +12,7 @@
 
     <div class="button-group" v-if="uploadedFile">
       <button @click="isEditing = true">Edit Metadata</button>
-      <button @click="" :disabled="!">Download</button>
+      <button @click="downloadUpdatedFile" :disabled="!updatedBlob">Download</button>
     </div>
 
     <MetaDataEditor

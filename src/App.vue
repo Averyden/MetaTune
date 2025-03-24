@@ -28,6 +28,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 import * as mm from 'music-metadata'
+import { ID3Writer } from 'browser-id3-writer'
 import AudioUploader from '@/components/AudioUploader.vue'
 import AudioPlayer from './components/AudioPlayer.vue'
 import MetaDataViewer from './components/MetaDataViewer.vue'
@@ -108,11 +109,22 @@ export default defineComponent({
       if (!uploadedFile.value) return
 
       const fileBuffer = await uploadedFile.value.arrayBuffer()
-      const metadataEditor = new Uint8Array(fileBuffer)
 
-      //TODO: Properly write the updated metadata into the file
+      const writer = new ID3Writer(fileBuffer)
 
-      updatedBlob.value = new Blob([metadataEditor], { type: uploadedFile.value.type })
+      writer.setFrame('TIT2', metadata.value.title || '')
+      writer.setFrame('TPE1', [metadata.value.artist || ''])
+      writer.setFrame('TALB', metadata.value.album || '')
+      writer.setFrame('TRCK', metadata.value.track?.no?.toString() || '')
+      writer.setFrame('APIC', {
+        description: 'Cover',
+        data: await fetch(metadata.value.coverUrl || '').then((res) => res.arrayBuffer()),
+        type: 0x03,
+      })
+
+      writer.addTag()
+
+      updatedBlob.value = writer.getBlob()
     }
 
     const downloadUpdatedFile = () => {

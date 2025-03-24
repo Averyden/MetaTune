@@ -208,4 +208,11 @@ input {
 .btnSave:hover {
   background: #d823cf;
 }
+
+.coverPreview {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 10px;
+  margin-top: 10px;
+}
 </style>

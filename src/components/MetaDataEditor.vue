@@ -11,6 +11,13 @@
       <label>Album:</label>
       <input v-model="editableMetaData.album" type="text" />
 
+      <label>Album Cover:</label>
+      <input type="file" accept="image/*" @change="" />
+
+      <div v-if="editableMetaData.coverArt">
+        <img :src="editableMetaData.coverArt" class="coverPreview" />
+      </div>
+
       <div class="buttonGroup">
         <button class="btnSave" @click="saveChanges">Save</button>
         <button class="btnClose" @click="closeModal">Cancel</button>
@@ -64,10 +71,16 @@ export default defineComponent({
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background-color: transparent;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  transition: background-color 0.45s ease-in-out;
+}
+
+.modal.visible {
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 @keyframes slideUp {

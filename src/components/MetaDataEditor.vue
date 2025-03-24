@@ -12,7 +12,7 @@
       <input v-model="editableMetaData.album" type="text" />
 
       <label>Album Cover:</label>
-      <input type="file" accept="image/*" @change="" />
+      <input type="file" accept="image/*" @change="handleImageUpload" />
 
       <div v-if="editableMetaData.coverArt">
         <img :src="editableMetaData.coverArt" class="coverPreview" />
@@ -40,6 +40,17 @@ export default defineComponent({
       editableMetaData.value = { ...newVal }
     })
 
+    const handleImageUpload = (event: Event) => {
+      const file = (event.target as HTMLInputElement).files?.[0]
+      if (file) {
+        const reader = new FileReader()
+        reader.onload = () => {
+          editableMetaData.value.coverArt = reader.result as string
+        }
+        reader.readAsDataURL(file)
+      }
+    }
+
     const saveChanges = () => {
       closeModal()
       setTimeout(() => {
@@ -58,7 +69,14 @@ export default defineComponent({
       }
     }
 
-    return { editableMetaData, saveChanges, closeModal, isClosing, handleAnimationEnd }
+    return {
+      editableMetaData,
+      saveChanges,
+      closeModal,
+      isClosing,
+      handleAnimationEnd,
+      handleImageUpload,
+    }
   },
 })
 </script>

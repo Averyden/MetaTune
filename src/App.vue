@@ -111,6 +111,17 @@ export default defineComponent({
       updatedBlob.value = new Blob([metadataEditor], { type: uploadedFile.value.type })
     }
 
+    const downloadUpdatedFile = () => {
+      if (!uploadedFile.value || !updatedBlob.value) return
+
+      const url = URL.createObjectURL(updatedBlob.value)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `${uploadedFile.value.name}_new`
+      a.click()
+      URL.revokeObjectURL(url)
+    }
+
     return {
       uploadedFile,
       handleFile,
@@ -120,6 +131,9 @@ export default defineComponent({
       metadata,
       isEditing,
       updateMetadata,
+      generateUpdatedFile,
+      updatedBlob,
+      downloadUpdatedFile,
     }
   },
 })

@@ -10,7 +10,10 @@
     <AudioPlayer v-if="audioUrl" :src="audioUrl" />
     <MetaDataViewer v-if="uploadedFile" :metadata="metadata" />
 
-    <button v-if="uploadedFile" @click="isEditing = true">Edit Metadata</button>
+    <div class="button-group" v-if="uploadedFile">
+      <button @click="isEditing = true">Edit Metadata</button>
+      <button @click="" :disabled="!">Download</button>
+    </div>
 
     <MetaDataEditor
       v-show="isEditing"
@@ -44,6 +47,7 @@ export default defineComponent({
     const audioUrl = ref<string | null>(null)
     const error = ref<string | null>(null)
     const isEditing = ref(false)
+    const updatedBlob = ref<Blob | null>(null)
     const metadata = ref<{
       title?: string
       artist?: string
@@ -77,6 +81,8 @@ export default defineComponent({
           },
           coverUrl: coverUrl ?? '',
         }
+
+        updatedBlob.value = file
       } catch (err) {
         error.value = 'Failed to parse metadata'
         uploadedFile.value = null
@@ -94,6 +100,15 @@ export default defineComponent({
     const updateMetadata = (newMetadata: any) => {
       metadata.value = { ...metadata.value, ...newMetadata }
       isEditing.value = false
+    }
+
+    const generateUpdatedFile = async () => {
+      if (!uploadedFile.value) return
+
+      const fileBuffer = await uploadedFile.value.arrayBuffer()
+      const metadataEditor = new Uint8Array(fileBuffer)
+
+      updatedBlob.value = new Blob([metadataEditor], { type: uploadedFile.value.type })
     }
 
     return {

@@ -100,6 +100,8 @@ export default defineComponent({
     const updateMetadata = (newMetadata: any) => {
       metadata.value = { ...metadata.value, ...newMetadata }
       isEditing.value = false
+
+      generateUpdatedFile()
     }
 
     const generateUpdatedFile = async () => {
@@ -117,7 +119,7 @@ export default defineComponent({
       const url = URL.createObjectURL(updatedBlob.value)
       const a = document.createElement('a')
       a.href = url
-      a.download = `${uploadedFile.value.name}_new`
+      a.download = 'FUCKKK' //`${uploadedFile.value.name}_new`
       a.click()
       URL.revokeObjectURL(url)
     }

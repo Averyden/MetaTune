@@ -10,13 +10,17 @@
     <AudioPlayer v-if="audioUrl" :src="audioUrl" />
     <MetaDataViewer v-if="uploadedFile" :metadata="metadata" />
 
-    <button v-if="uploadedFile" @click="isEditing = true">Edit Metadata</button>
+    <div class="button-group" v-if="uploadedFile">
+      <button @click="isEditing = true">Edit Metadata</button>
+      <button @click="downloadUpdatedFile" :disabled="!updatedBlob">Download</button>
+    </div>
 
     <MetaDataEditor
-      v-if="isEditing"
+      v-show="isEditing"
       :metadata="metadata"
-      @close="isEditing = false"
+      :visible="isEditing"
       @save="updateMetadata"
+      @close="isEditing = false"
     />
   </div>
 </template>
@@ -24,6 +28,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 import * as mm from 'music-metadata'
+import { ID3Writer } from 'browser-id3-writer'
 import AudioUploader from '@/components/AudioUploader.vue'
 import AudioPlayer from './components/AudioPlayer.vue'
 import MetaDataViewer from './components/MetaDataViewer.vue'
@@ -43,6 +48,7 @@ export default defineComponent({
     const audioUrl = ref<string | null>(null)
     const error = ref<string | null>(null)
     const isEditing = ref(false)
+    const updatedBlob = ref<Blob | null>(null)
     const metadata = ref<{
       title?: string
       artist?: string
@@ -76,6 +82,8 @@ export default defineComponent({
           },
           coverUrl: coverUrl ?? '',
         }
+
+        updatedBlob.value = file
       } catch (err) {
         error.value = 'Failed to parse metadata'
         uploadedFile.value = null
@@ -93,6 +101,41 @@ export default defineComponent({
     const updateMetadata = (newMetadata: any) => {
       metadata.value = { ...metadata.value, ...newMetadata }
       isEditing.value = false
+
+      generateUpdatedFile()
+    }
+
+    const generateUpdatedFile = async () => {
+      if (!uploadedFile.value) return
+
+      const fileBuffer = await uploadedFile.value.arrayBuffer()
+
+      const writer = new ID3Writer(fileBuffer)
+
+      writer.setFrame('TIT2', metadata.value.title || '')
+      writer.setFrame('TPE1', [metadata.value.artist || ''])
+      writer.setFrame('TALB', metadata.value.album || '')
+      writer.setFrame('TRCK', metadata.value.track?.no?.toString() || '')
+      writer.setFrame('APIC', {
+        description: 'Cover',
+        data: await fetch(metadata.value.coverUrl || '').then((res) => res.arrayBuffer()),
+        type: 0x03,
+      })
+
+      writer.addTag()
+
+      updatedBlob.value = writer.getBlob()
+    }
+
+    const downloadUpdatedFile = () => {
+      if (!uploadedFile.value || !updatedBlob.value) return
+
+      const url = URL.createObjectURL(updatedBlob.value)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `${uploadedFile.value.name}_new`
+      a.click()
+      URL.revokeObjectURL(url)
     }
 
     return {
@@ -104,6 +147,9 @@ export default defineComponent({
       metadata,
       isEditing,
       updateMetadata,
+      generateUpdatedFile,
+      updatedBlob,
+      downloadUpdatedFile,
     }
   },
 })

@@ -1,6 +1,6 @@
 <template>
-  <div class="modal">
-    <div class="modalContent">
+  <div class="modal" v-if="visible">
+    <div class="modalContent" :class="{ closing: isClosing }" @animationend="handleAnimationEnd">
       <h2>Editing Metadata</h2>
       <label>Title:</label>
       <input v-model="editableMetaData.title" type="text" />
@@ -11,9 +11,16 @@
       <label>Album:</label>
       <input v-model="editableMetaData.album" type="text" />
 
+      <label>Album Cover:</label>
+      <input type="file" accept="image/*" @change="handleImageUpload" />
+
+      <div v-if="editableMetaData.coverUrl">
+        <img :src="editableMetaData.coverUrl" class="coverPreview" />
+      </div>
+
       <div class="buttonGroup">
         <button class="btnSave" @click="saveChanges">Save</button>
-        <button class="btnClose" @click="$emit('close')">Cancel</button>
+        <button class="btnClose" @click="closeModal">Cancel</button>
       </div>
     </div>
   </div>
@@ -24,19 +31,52 @@ import { defineComponent, ref, watch } from 'vue'
 
 export default defineComponent({
   name: 'MetaDataEditor',
-  props: ['metadata'],
+  props: ['metadata', 'visible'],
   setup(props, { emit }) {
     const editableMetaData = ref({ ...props.metadata })
+    const isClosing = ref(false)
 
     watch(props.metadata, (newVal) => {
       editableMetaData.value = { ...newVal }
     })
 
-    const saveChanges = () => {
-      emit('save', editableMetaData.value)
+    const handleImageUpload = (event: Event) => {
+      const file = (event.target as HTMLInputElement).files?.[0]
+      if (file) {
+        const reader = new FileReader()
+        reader.onload = () => {
+          editableMetaData.value.coverUrl = reader.result as string
+        }
+        reader.readAsDataURL(file)
+      }
     }
 
-    return { editableMetaData, saveChanges }
+    const saveChanges = () => {
+      closeModal()
+      setTimeout(() => {
+        emit('save', editableMetaData.value)
+      }, 300)
+    }
+
+    const closeModal = () => {
+      isClosing.value = true
+    }
+
+    const handleAnimationEnd = () => {
+      if (isClosing.value) {
+        emit('close')
+        isClosing.value = false
+      }
+    }
+
+    return {
+      editableMetaData,
+      saveChanges,
+      closeModal,
+      isClosing,
+      handleAnimationEnd,
+      handleImageUpload,
+    }
   },
 })
 </script>
@@ -49,29 +89,75 @@ export default defineComponent({
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background-color: transparent;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  transition: background-color 0.45s ease-in-out;
+}
+
+.modal.visible {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(0);
+  }
+  95% {
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(-100%);
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
+@keyframes slideDown {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: visible;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .modalContent {
-  background: white;
+  margin: auto;
+  position: relative;
+  background: #fff;
+  border-radius: 10px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: slideDown 0.3s ease forwards;
   padding: 20px;
-  border-radius: 12px;
-  text-align: center;
   width: 90%;
   max-width: 400px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.modalContent.closing {
+  animation: slideUp 0.3s ease forwards;
 }
 
 .modalContent h2 {
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  font-size: 25px;
+  text-align: center;
+  padding: 10px;
   color: black;
-  font-size: 24px;
-  margin-bottom: 10px;
 }
 
 label {
+  font-family: 'Roboto', sans-serif;
+  color: #2e2e2e;
   display: block;
   text-align: left;
   font-weight: bold;
@@ -79,14 +165,18 @@ label {
 }
 
 input {
-  display: block;
-  align-items: left;
-  width: 95%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 16px;
-  margin-bottom: 20px;
+  font-family: 'Roboto', sans-serif;
+  color: #2e2e2e;
+  background-color: #b0b0b0;
+  font-size: 15px;
+  padding: 16px;
+  text-align: center;
+  border-radius: 15px;
+  width: 70%;
+  height: 7%;
+  resize: none;
+  border: none;
+  overflow: hidden;
 }
 
 .buttonGroup {
@@ -95,33 +185,34 @@ input {
   padding-top: 15px;
 }
 
-.btnSave {
-  background: #4caf50;
-  color: white;
+.buttonGroup .btnSave,
+.buttonGroup .btnClose {
+  margin: 8px;
+  min-width: 75px;
+  width: auto;
+  height: 30px;
   border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
+  border-radius: 15px;
+  font-family: 'Roboto', sans-serif;
+  font-size: auto;
+  transition: background 0.3s;
   cursor: pointer;
-  font-size: 16px;
-  transition: 0.3s;
+}
+
+.btnSave {
+  background-color: #f13ce8;
+  color: #fff;
+  transition: background 0.3s;
 }
 
 .btnSave:hover {
-  background: #45a049;
+  background: #d823cf;
 }
 
-.btnClose {
-  background: #e74c3c;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: 0.3s;
-}
-
-.btnClose:hover {
-  background: #c0392b;
+.coverPreview {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 10px;
+  margin-top: 10px;
 }
 </style>

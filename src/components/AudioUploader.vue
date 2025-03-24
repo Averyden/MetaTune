@@ -43,4 +43,8 @@ export default defineComponent({
   flex-direction: column;
   gap: 8px;
 }
+
+input {
+  width: 100% !important;
+}
 </style>

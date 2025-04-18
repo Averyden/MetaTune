@@ -13,7 +13,9 @@
 
 body {
   font-family: 'Roboto', sans-serif;
-  background-color: #ccdddd;
+  background-color: var(--bg);
+  margin: 0;
+  padding: 0;
 }
 
 h1,

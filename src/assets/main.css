@@ -1,5 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
+:root {
+  --bg: #ccdddd;
+  --text-light: #f3f3f3;
+  --text-dark: #2e2e2e;
+  --accent: #f13ce8;
+  --accent-hover: #d823cf;
+  --border-radius: 12px;
+  --card-bg: #ffffffdd;
+  --card-border: #ccc;
+}
+
 body {
   font-family: 'Roboto', sans-serif;
   background-color: #ccdddd;

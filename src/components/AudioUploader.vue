@@ -38,13 +38,41 @@ export default defineComponent({
 
 <style scoped>
 .audioUploader {
-  color: white;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  align-items: center;
+  gap: 12px;
+  padding: 20px;
+  background-color: #e8f1f2;
+  border: 2px dashed #7da8ab;
+  border-radius: 12px;
+  transition: border-color 0.3s ease;
 }
 
-input {
-  width: 100% !important;
+.audioUploader:hover {
+  border-color: #558b92;
+}
+
+.audioUploader label {
+  font-weight: 600;
+  color: #2e4a4c;
+  font-size: 16px;
+}
+
+input[type='file'] {
+  background-color: #ffffff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+  width: 100%;
+  max-width: 300px;
+  transition: box-shadow 0.2s ease;
+}
+
+input[type='file']:hover {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
 }
 </style>

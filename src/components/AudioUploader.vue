@@ -75,4 +75,8 @@ input[type='file'] {
 input[type='file']:hover {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
 }
+
+.audioUploader {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
 </style>

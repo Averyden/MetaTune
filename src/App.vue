@@ -168,6 +168,14 @@ export default defineComponent({
   align-items: center;
   margin-top: 20px;
 }
+
+.button-group {
+  margin-top: 20px;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
 .errorMessage {
   color: red;
   font-size: 14px;

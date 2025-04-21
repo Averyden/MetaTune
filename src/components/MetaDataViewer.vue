@@ -4,7 +4,7 @@
     <p><strong>Title:</strong> {{ metadata.title }}</p>
     <p><strong>Artist:</strong> {{ metadata.artist }}</p>
     <p><strong>Album:</strong> {{ metadata.album }}</p>
-    <p><strong>Track:</strong> {{ metadata.track?.no }}</p>
+    <!-- <p><strong>Track:</strong> {{ metadata.track?.no }}</p> -->
 
     <!-- TODO: implement this button later :D -->
 

@@ -1,14 +1,12 @@
 <template>
   <button class="darkModeToggle" @click="toggleDarkMode">
-    <img
-      :src="isDark ? 'src/assets/icons/sun.png' : 'src/assets/icons/moon.png'"
-      alt="Toggle Dark Mode"
-      class="icon"
-    />
+    <img :src="isDark ? sunIcon : moonIcon" alt="Toggle Dark Mode" class="icon" />
   </button>
 </template>
 
 <script lang="ts">
+import sunIcon from '@/assets/icons/sun.png'
+import moonIcon from '@/assets/icons/moon.png'
 import { onMounted, ref, defineComponent } from 'vue'
 
 export default defineComponent({
@@ -32,6 +30,8 @@ export default defineComponent({
     return {
       isDark,
       toggleDarkMode,
+      sunIcon,
+      moonIcon,
     }
   },
 })

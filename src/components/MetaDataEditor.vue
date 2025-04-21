@@ -128,8 +128,7 @@ export default defineComponent({
 .modalContent {
   margin: auto;
   position: relative;
-  background: #ffffff;
-  border-radius: 16px;
+  border-radius: var(--border-radius);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
@@ -138,6 +137,8 @@ export default defineComponent({
   padding: 24px;
   width: 90%;
   max-width: 420px;
+  background-color: var(--card-bg);
+  color: var(--text-dark);
 }
 
 .modalContent.closing {
@@ -150,14 +151,14 @@ export default defineComponent({
   font-size: 24px;
   text-align: center;
   padding-bottom: 12px;
-  color: #222;
+  color: var(--text-dark);
 }
 
 label {
   font-family: 'Roboto', sans-serif;
   font-size: 14px;
   font-weight: 500;
-  color: #444;
+  color: var(--text-dark);
   margin-top: 14px;
   margin-bottom: 4px;
   text-align: left;
@@ -166,19 +167,19 @@ label {
 input[type='text'],
 input[type='file'] {
   font-family: 'Roboto', sans-serif;
-  background-color: #f0f0f0;
+  background-color: var(--input-bg);
   border: none;
-  border-radius: 12px;
+  border-radius: var(--border-radius);
   padding: 12px;
   font-size: 15px;
-  color: #333;
+  color: var(--text-dark);
   width: 100%;
   box-sizing: border-box;
   transition: background-color 0.2s;
 }
 
 input[type='text']:focus {
-  background-color: #e0e0e0;
+  background-color: var(--card-border);
   outline: none;
 }
 
@@ -188,7 +189,7 @@ input[type='text']:focus {
   border-radius: 10px;
   margin-top: 12px;
   object-fit: cover;
-  border: 1px solid #ddd;
+  border: 1px solid var(--card-border);
 }
 
 .buttonGroup {
@@ -223,11 +224,11 @@ input[type='text']:focus {
 }
 
 .btnClose {
-  background-color: #e0e0e0;
-  color: var(--text-dark);
+  background-color: var(--btn-bg);
+  color: var(--btn-text);
 }
 
 .btnClose:hover {
-  background-color: #ccc;
+  background-color: var(--card-border);
 }
 </style>

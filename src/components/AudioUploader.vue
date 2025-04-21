@@ -56,12 +56,13 @@ export default defineComponent({
 
 .audioUploader label {
   font-weight: 600;
-  color: #2e4a4c;
+  color: var(--text-dark);
   font-size: 16px;
 }
 
 input[type='file'] {
-  background-color: #ffffff;
+  background-color: var(--card-bg);
+  color: var(--text-dark);
   border: none;
   padding: 10px 15px;
   border-radius: 8px;
@@ -71,6 +72,10 @@ input[type='file'] {
   width: 100%;
   max-width: 300px;
   transition: box-shadow 0.2s ease;
+  transition:
+    background-color,
+    color,
+    0.3s ease;
 }
 
 input[type='file']:hover {

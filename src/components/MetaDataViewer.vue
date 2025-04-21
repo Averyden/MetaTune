@@ -27,17 +27,21 @@ export default defineComponent({
 
 <style>
 .metadata-viewer {
-  margin-top: 20px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  display: inline-block;
+  margin-top: 30px;
+  padding: 20px;
+  border-radius: 12px;
+  background-color: #e8f1f2;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  color: #2e4a4c;
+  font-family: 'Roboto', sans-serif;
+  text-align: left;
 }
 
 .albumCover {
   max-width: 100%;
-  max-height: 200px;
+  max-height: 250px;
   border-radius: 10px;
-  margin-top: 10px;
+  margin-top: 15px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 </style>

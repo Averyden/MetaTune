@@ -22,6 +22,8 @@
       @save="updateMetadata"
       @close="isEditing = false"
     />
+
+    <DarkModeToggle />
   </div>
 </template>
 
@@ -33,6 +35,7 @@ import AudioUploader from '@/components/AudioUploader.vue'
 import AudioPlayer from './components/AudioPlayer.vue'
 import MetaDataViewer from './components/MetaDataViewer.vue'
 import MetaDataEditor from './components/MetaDataEditor.vue'
+import DarkModeToggle from './components/DarkModeToggle.vue'
 
 export default defineComponent({
   name: 'App',
@@ -41,6 +44,7 @@ export default defineComponent({
     AudioPlayer,
     MetaDataViewer,
     MetaDataEditor,
+    DarkModeToggle,
   },
 
   setup() {
@@ -168,6 +172,14 @@ export default defineComponent({
   align-items: center;
   margin-top: 20px;
 }
+
+.button-group {
+  margin-top: 20px;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
 .errorMessage {
   color: red;
   font-size: 14px;

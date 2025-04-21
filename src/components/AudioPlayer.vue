@@ -31,6 +31,7 @@ export default defineComponent({
   max-width: 400px;
   margin-left: auto;
   margin-right: auto;
+  transition: background-color 0.5s ease;
 }
 
 audio {

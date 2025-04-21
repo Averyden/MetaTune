@@ -43,14 +43,14 @@ export default defineComponent({
   align-items: center;
   gap: 12px;
   padding: 20px;
-  background-color: #e8f1f2;
+  background-color: var(--uploader);
   /* border: 2px dashed #7da8ab; */
   border-radius: 12px;
   transition: background-color 0.3s ease;
 }
 
 .audioUploader:hover {
-  background-color: #bfd2d4;
+  background-color: var(--uploader-hover);
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
 }
 

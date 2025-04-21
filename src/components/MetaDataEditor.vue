@@ -81,7 +81,7 @@ export default defineComponent({
 })
 </script>
 
-<style>
+<style scoped>
 /* TODO: Stylize this like the notesu popup :D */
 .modal {
   position: fixed;
@@ -93,7 +93,6 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: center;
-
   transition: background-color 0.45s ease-in-out;
 }
 
@@ -130,16 +129,16 @@ export default defineComponent({
 .modalContent {
   margin: auto;
   position: relative;
-  background: #fff;
-  border-radius: 10px;
-  height: auto;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   animation: slideDown 0.3s ease forwards;
-  padding: 20px;
+  padding: 24px;
   width: 90%;
-  max-width: 400px;
+  max-width: 420px;
 }
 
 .modalContent.closing {
@@ -148,71 +147,88 @@ export default defineComponent({
 
 .modalContent h2 {
   font-family: 'Roboto', sans-serif;
-  font-weight: bold;
-  font-size: 25px;
+  font-weight: 700;
+  font-size: 24px;
   text-align: center;
-  padding: 10px;
-  color: black;
+  padding-bottom: 12px;
+  color: #222;
 }
 
 label {
   font-family: 'Roboto', sans-serif;
-  color: #2e2e2e;
-  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #444;
+  margin-top: 14px;
+  margin-bottom: 4px;
   text-align: left;
-  font-weight: bold;
-  margin: 10px 0 5px;
 }
 
-input {
+input[type='text'],
+input[type='file'] {
   font-family: 'Roboto', sans-serif;
-  color: #2e2e2e;
-  background-color: #b0b0b0;
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 12px;
+  padding: 12px;
   font-size: 15px;
-  padding: 16px;
-  text-align: center;
-  border-radius: 15px;
-  width: 70%;
-  height: 7%;
-  resize: none;
-  border: none;
-  overflow: hidden;
+  color: #333;
+  width: 100%;
+  box-sizing: border-box;
+  transition: background-color 0.2s;
 }
 
-.buttonGroup {
-  display: flex;
-  justify-content: space-between;
-  padding-top: 15px;
-}
-
-.buttonGroup .btnSave,
-.buttonGroup .btnClose {
-  margin: 8px;
-  min-width: 75px;
-  width: auto;
-  height: 30px;
-  border: none;
-  border-radius: 15px;
-  font-family: 'Roboto', sans-serif;
-  font-size: auto;
-  transition: background 0.3s;
-  cursor: pointer;
-}
-
-.btnSave {
-  background-color: #f13ce8;
-  color: #fff;
-  transition: background 0.3s;
-}
-
-.btnSave:hover {
-  background: #d823cf;
+input[type='text']:focus {
+  background-color: #e0e0e0;
+  outline: none;
 }
 
 .coverPreview {
   max-width: 100%;
   max-height: 200px;
   border-radius: 10px;
-  margin-top: 10px;
+  margin-top: 12px;
+  object-fit: cover;
+  border: 1px solid #ddd;
+}
+
+.buttonGroup {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.buttonGroup .btnSave,
+.buttonGroup .btnClose {
+  flex: 1;
+  padding: 12px 0;
+  border: none;
+  border-radius: var(--border-radius);
+  font-family: 'Roboto', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+}
+
+.btnSave {
+  background-color: var(--accent);
+  color: var(--text-light);
+}
+
+.btnSave:hover {
+  background-color: var(--accent-hover);
+}
+
+.btnClose {
+  background-color: #e0e0e0;
+  color: var(--text-dark);
+}
+
+.btnClose:hover {
+  background-color: #ccc;
 }
 </style>

@@ -44,13 +44,14 @@ export default defineComponent({
   gap: 12px;
   padding: 20px;
   background-color: #e8f1f2;
-  border: 2px dashed #7da8ab;
+  /* border: 2px dashed #7da8ab; */
   border-radius: 12px;
-  transition: border-color 0.3s ease;
+  transition: background-color 0.3s ease;
 }
 
 .audioUploader:hover {
-  border-color: #558b92;
+  background-color: #bfd2d4;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
 }
 
 .audioUploader label {

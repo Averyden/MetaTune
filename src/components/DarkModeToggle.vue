@@ -9,13 +9,30 @@
 </template>
 
 <script lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 
-const isDark = ref(false)
+export default {
+  setup() {
+    const isDark = ref(false)
 
-const toggleDarkMode = () => {
-  isDark.value = !isDark.value
-  document.documentElement.classList.toggle('darkMode', isDark.value)
-  localStorage.setItem('darkMode', isDark.value.toString())
+    const toggleDarkMode = () => {
+      isDark.value = !isDark.value
+      document.documentElement.classList.toggle('darkMode', isDark.value)
+      localStorage.setItem('darkMode', isDark.value.toString())
+    }
+
+    onMounted(() => {
+      const saved = localStorage.getItem('darkMode')
+      if (saved === 'true') {
+        isDark.value = true
+        document.documentElement.classList.add('dark')
+      }
+    })
+
+    return {
+      isDark,
+      toggleDarkMode,
+    }
+  },
 }
 </script>

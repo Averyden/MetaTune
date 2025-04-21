@@ -25,7 +25,7 @@ export default defineComponent({
       const saved = localStorage.getItem('darkMode')
       if (saved === 'true') {
         isDark.value = true
-        document.documentElement.classList.add('dark')
+        document.documentElement.classList.add('darkMode')
       }
     })
 

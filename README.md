@@ -11,7 +11,7 @@ A vue.js application which allows users to upload audio files and view/edit the 
 - Downloading the saved audio, with the new metadata
 
 ### Planned Feature List
-- Stylizing the entire thing to actually look good
+- Could be made prettier
 - Expanding the amount of data, that can be edited
 - Downloading the same file type, as the user uploaded. If the user uploads a .flac file, download a .flac file back instead of a .mp3
 

@@ -4,36 +4,27 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { defineComponent } from 'vue'
+<script setup  lang="ts">
+import { ref, defineEmits } from 'vue'
 
-export default defineComponent({
-  name: 'AudioUploader',
-  emits: ['fileUploaded', 'uploadError'],
-  data() {
-    return {
-      errorMessage: '' as string,
-    }
-  },
+const errorMessage = ref('')
 
-  methods: {
-    handleFileUpload(event: Event) {
-      const target = event.target as HTMLInputElement
-      const file = target.files?.[0]
-      if (!file) return
+const emit = defineEmits(['fileUploaded', 'uploadError'])
 
-      if (!file.type.startsWith('audio/')) {
-        this.errorMessage = 'Please upload a valid audio file.'
-        this.$emit('uploadError', this.errorMessage)
-        return
-      } else {
-        this.errorMessage = ''
-      }
+const handleFileUpload = (event: Event) => {
+  const target = event.target as HTMLInputElement
+  const file = target.files?.[0]
+  if (!file) return
 
-      this.$emit('fileUploaded', file)
-    },
-  },
-})
+  if (!file.type.startsWith('audio/')) {
+    errorMessage.value = 'Please upload a valid audio file.'
+    emit('uploadError', errorMessage.value)
+    return
+  } else {
+    errorMessage.value = ''
+  }
+  emit('fileUploaded', file)
+}
 </script>
 
 <style scoped>

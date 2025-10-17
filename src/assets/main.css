@@ -16,6 +16,21 @@
   --uploader-hover: #bfd2d4;
 }
 
+.darkMode {
+  --bg: #1e1e1e;
+  --text-light: #f3f3f3;
+  --text-dark: #e3e3e3;
+  --accent: #f13ce8;
+  --accent-hover: #d823cf;
+  --card-bg: #2a2a2a;
+  --card-border: #444;
+  --input-bg: #3a3a3a;
+  --btn-bg: #555;
+  --btn-text: #f3f3f3;
+  --uploader: #2a2f31;
+  --uploader-hover: #3b4446;
+}
+
 body {
   font-family: 'Roboto', sans-serif;
   background-color: var(--bg);
@@ -44,19 +59,4 @@ button {
 
 button:hover {
   background-color: var(--accent-hover);
-}
-
-.darkMode {
-  --bg: #1e1e1e;
-  --text-light: #f3f3f3;
-  --text-dark: #e3e3e3;
-  --accent: #f13ce8;
-  --accent-hover: #d823cf;
-  --card-bg: #2a2a2a;
-  --card-border: #444;
-  --input-bg: #3a3a3a;
-  --btn-bg: #555;
-  --btn-text: #f3f3f3;
-  --uploader: #2a2f31;
-  --uploader-hover: #3b4446;
 }

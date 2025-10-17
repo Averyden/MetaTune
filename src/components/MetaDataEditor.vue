@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, defineEmits, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 import type { Metadata } from '@/models/MetaData'
 
 const props = defineProps({

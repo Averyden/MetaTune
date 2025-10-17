@@ -16,8 +16,9 @@ const handleFileUpload = (event: Event) => {
   const file = target.files?.[0]
   if (!file) return
 
-  if (!file.type.startsWith('audio/')) {
-    errorMessage.value = 'Please upload a valid audio file.'
+  // if (!file.type.startsWith('audio/')) {
+  if (!file.name.endsWith('.mp3')) {
+    errorMessage.value = 'File must be .mp3 due to current code limitations. I am actively working on getting this resolved.'
     emit('uploadError', errorMessage.value)
     return
   } else {

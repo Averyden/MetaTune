@@ -119,10 +119,25 @@ const generateUpdatedFile = async () => {
   writer.setFrame('TALB', metadata.value.album || '')
   writer.setFrame('TRCK', metadata.value.track?.no?.toString() || '')
 
+  if (metadata.value.coverUrl) {
+    try {
+      const imageBuffer = await fetch(metadata.value.coverUrl)
+        .then((response) => response.arrayBuffer())
+      writer.setFrame('APIC', {
+        description: 'Album Art',
+        data: imageBuffer,
+        type: 0x03,
+      })
+    } catch (error) {
+      console.error("Error loading cover image:", error)
+    }
+  }
+
   writer.addTag()
 
   updatedBlob.value = writer.getBlob()
 }
+
 
 
 const downloadUpdatedFile = () => {

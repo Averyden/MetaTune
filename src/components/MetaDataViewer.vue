@@ -16,12 +16,15 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script setup lang="ts">
+import type { Metadata } from '@/models/MetaData'
 
-export default defineComponent({
-  name: 'MetaDataViewer',
-  props: ['metadata'],
+defineProps({
+  metadata: {
+    type: Object as () => Metadata,
+    required: true,
+  },
+  visible: Boolean,
 })
 </script>
 

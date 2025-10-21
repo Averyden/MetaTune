@@ -4,36 +4,25 @@
   </button>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import sunIcon from '@/assets/icons/sun.png'
 import moonIcon from '@/assets/icons/moon.png'
-import { onMounted, ref, defineComponent } from 'vue'
+import { onMounted, ref } from 'vue'
 
-export default defineComponent({
-  setup() {
-    const isDark = ref(false)
+const isDark = ref(false)
 
-    const toggleDarkMode = () => {
-      isDark.value = !isDark.value
-      document.documentElement.classList.toggle('darkMode', isDark.value)
-      localStorage.setItem('darkMode', isDark.value.toString())
-    }
+const toggleDarkMode = () => {
+  isDark.value = !isDark.value
+  document.documentElement.classList.toggle('darkMode', isDark.value)
+  localStorage.setItem('darkMode', isDark.value.toString())
+}
 
-    onMounted(() => {
-      const saved = localStorage.getItem('darkMode')
-      if (saved === 'true') {
-        isDark.value = true
-        document.documentElement.classList.add('darkMode')
-      }
-    })
-
-    return {
-      isDark,
-      toggleDarkMode,
-      sunIcon,
-      moonIcon,
-    }
-  },
+onMounted(() => {
+  const saved = localStorage.getItem('darkMode')
+  if (saved === 'true') {
+    isDark.value = true
+    document.documentElement.classList.add('darkMode')
+  }
 })
 </script>
 

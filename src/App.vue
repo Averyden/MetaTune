@@ -27,136 +27,131 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue'
+<script setup lang="ts">
+import { ref } from 'vue'
 import * as mm from 'music-metadata'
 import { ID3Writer } from 'browser-id3-writer'
+import type { Metadata } from './models/MetaData'
+
+
 import AudioUploader from '@/components/AudioUploader.vue'
 import AudioPlayer from './components/AudioPlayer.vue'
 import MetaDataViewer from './components/MetaDataViewer.vue'
 import MetaDataEditor from './components/MetaDataEditor.vue'
 import DarkModeToggle from './components/DarkModeToggle.vue'
 
-export default defineComponent({
-  name: 'App',
-  components: {
-    AudioUploader,
-    AudioPlayer,
-    MetaDataViewer,
-    MetaDataEditor,
-    DarkModeToggle,
-  },
+const uploadedFile = ref<File | null>(null)
+const audioUrl = ref<string | null>(null)
+const error = ref<string | null>(null)
+const isEditing = ref(false)
+const updatedBlob = ref<Blob | null>(null)
 
-  setup() {
-    const uploadedFile = ref<File | null>(null)
-    const audioUrl = ref<string | null>(null)
-    const error = ref<string | null>(null)
-    const isEditing = ref(false)
-    const updatedBlob = ref<Blob | null>(null)
-    const metadata = ref<{
-      title?: string
-      artist?: string
-      album?: string
-      track?: { no?: number; of?: number }
-      coverUrl?: string
-    }>({})
+const metadata = ref<Metadata>({
+  title: '',
+  artist: '',
+  album: '',
+  track:  { no: undefined, of: undefined },
+  coverUrl: '',
+})
 
-    const handleFile = async (file: File) => {
-      try {
-        error.value = null
-        uploadedFile.value = file
-        audioUrl.value = URL.createObjectURL(file)
 
-        const extractedData = await mm.parseBlob(file)
-        let coverUrl = null
+const handleFile = async (file: File) => {
+  try {
+    error.value = null
+    uploadedFile.value = file
+    audioUrl.value = URL.createObjectURL(file)
 
-        if (extractedData.common.picture && extractedData.common.picture.length > 0) {
-          const picture = extractedData.common.picture[0]
-          const blob = new Blob([new Uint8Array(picture.data)], { type: picture.format })
-          coverUrl = URL.createObjectURL(blob)
-        }
+    const extractedData = await mm.parseBlob(file)
+    let coverUrl = null
 
-        metadata.value = {
-          title: extractedData.common.title || 'Unknown Title',
-          artist: extractedData.common.artist || 'Unknown Artist',
-          album: extractedData.common.album || 'Unknown Album',
-          track: {
-            no: extractedData.common.track?.no ?? undefined,
-            of: extractedData.common.track?.of ?? undefined,
-          },
-          coverUrl: coverUrl ?? '',
-        }
-
-        updatedBlob.value = file
-      } catch (err) {
-        error.value = 'Failed to parse metadata'
-        uploadedFile.value = null
-        audioUrl.value = null
-        metadata.value = {}
-      }
+    if (extractedData.common.picture && extractedData.common.picture.length > 0) {
+      const picture = extractedData.common.picture[0]
+      const blob = new Blob([new Uint8Array(picture.data)], { type: picture.format })
+      coverUrl = URL.createObjectURL(blob)
     }
 
-    const handleError = (message: string) => {
-      error.value = message
-      uploadedFile.value = null
-      audioUrl.value = null
+    metadata.value = {
+      title: extractedData.common.title || 'Unknown Title',
+      artist: extractedData.common.artist || 'Unknown Artist',
+      album: extractedData.common.album || 'Unknown Album',
+      track: {
+        no: extractedData.common.track?.no ?? undefined,
+        of: extractedData.common.track?.of ?? undefined,
+      },
+      coverUrl: coverUrl ?? '',
     }
 
-    const updateMetadata = (newMetadata: any) => {
-      metadata.value = { ...metadata.value, ...newMetadata }
-      isEditing.value = false
+    updatedBlob.value = file
+  } catch (err) {
+    error.value = 'Failed to parse metadata'
+    uploadedFile.value = null
+    audioUrl.value = null
+    metadata.value = {}
+    console.log(err as string)
+  }
+}
 
-      generateUpdatedFile()
-    }
+const handleError = (message: string) => {
+  error.value = message
+  uploadedFile.value = null
+  audioUrl.value = null
+}
 
-    const generateUpdatedFile = async () => {
-      if (!uploadedFile.value) return
+//TODO: fix that
 
-      const fileBuffer = await uploadedFile.value.arrayBuffer()
+// i swear to god if that was the issue...
+const updateMetadata = (newMetadata: Metadata) => {
+  metadata.value = { ...metadata.value, ...newMetadata }
+  isEditing.value = false
 
-      const writer = new ID3Writer(fileBuffer)
+  generateUpdatedFile()
+}
 
-      writer.setFrame('TIT2', metadata.value.title || '')
-      writer.setFrame('TPE1', [metadata.value.artist || ''])
-      writer.setFrame('TALB', metadata.value.album || '')
-      writer.setFrame('TRCK', metadata.value.track?.no?.toString() || '')
+const generateUpdatedFile = async () => {
+  if (!uploadedFile.value) return
+
+  const fileBuffer = await uploadedFile.value.arrayBuffer()
+
+  const writer = new ID3Writer(fileBuffer)
+
+  writer.setFrame('TIT2', metadata.value.title || '')
+  writer.setFrame('TPE1', [metadata.value.artist || ''])
+  writer.setFrame('TALB', metadata.value.album || '')
+  writer.setFrame('TRCK', metadata.value.track?.no?.toString() || '')
+
+  if (metadata.value.coverUrl) {
+    try {
+      const imageBuffer = await fetch(metadata.value.coverUrl)
+        .then((response) => response.arrayBuffer())
       writer.setFrame('APIC', {
-        description: 'Cover',
-        data: await fetch(metadata.value.coverUrl || '').then((res) => res.arrayBuffer()),
+        description: 'Album Art',
+        data: imageBuffer,
         type: 0x03,
       })
-
-      writer.addTag()
-
-      updatedBlob.value = writer.getBlob()
+    } catch (error) {
+      console.error("Error loading cover image:", error)
     }
+  }
 
-    const downloadUpdatedFile = () => {
-      if (!uploadedFile.value || !updatedBlob.value) return
+  writer.addTag()
 
-      const url = URL.createObjectURL(updatedBlob.value)
-      const a = document.createElement('a')
-      a.href = url
-      a.download = `${uploadedFile.value.name}_new`
-      a.click()
-      URL.revokeObjectURL(url)
-    }
+  updatedBlob.value = writer.getBlob()
+}
 
-    return {
-      uploadedFile,
-      handleFile,
-      audioUrl,
-      error,
-      handleError,
-      metadata,
-      isEditing,
-      updateMetadata,
-      generateUpdatedFile,
-      updatedBlob,
-      downloadUpdatedFile,
-    }
-  },
-})
+
+
+const downloadUpdatedFile = () => {
+  if (!uploadedFile.value || !updatedBlob.value) return
+
+  const url = URL.createObjectURL(updatedBlob.value)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = `${uploadedFile.value.name.replace(/\.[^/.]+$/, '')}_updated.mp3`
+  a.click()
+
+  URL.revokeObjectURL(url)
+}
+
 </script>
 
 <style>

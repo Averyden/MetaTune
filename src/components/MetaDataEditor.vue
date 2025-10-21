@@ -26,59 +26,58 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, watch } from 'vue'
+<script setup lang="ts">
+import { ref, watch } from 'vue'
+import type { Metadata } from '@/models/MetaData'
 
-export default defineComponent({
-  name: 'MetaDataEditor',
-  props: ['metadata', 'visible'],
-  setup(props, { emit }) {
-    const editableMetaData = ref({ ...props.metadata })
-    const isClosing = ref(false)
-
-    watch(props.metadata, (newVal) => {
-      editableMetaData.value = { ...newVal }
-    })
-
-    const handleImageUpload = (event: Event) => {
-      const file = (event.target as HTMLInputElement).files?.[0]
-      if (file) {
-        const reader = new FileReader()
-        reader.onload = () => {
-          editableMetaData.value.coverUrl = reader.result as string
-        }
-        reader.readAsDataURL(file)
-      }
-    }
-
-    const saveChanges = () => {
-      closeModal()
-      setTimeout(() => {
-        emit('save', editableMetaData.value)
-      }, 300)
-    }
-
-    const closeModal = () => {
-      isClosing.value = true
-    }
-
-    const handleAnimationEnd = () => {
-      if (isClosing.value) {
-        emit('close')
-        isClosing.value = false
-      }
-    }
-
-    return {
-      editableMetaData,
-      saveChanges,
-      closeModal,
-      isClosing,
-      handleAnimationEnd,
-      handleImageUpload,
-    }
+const props = defineProps({
+  metadata: {
+    type: Object as () => Metadata,
+    required: true,
   },
+  visible: Boolean,
 })
+
+
+const emit = defineEmits(['save', 'close'])
+
+const editableMetaData = ref({ ...props.metadata })
+const isClosing = ref(false)
+
+
+watch(() => props.metadata, (newval) => {
+  editableMetaData.value = {...newval}
+}, {immediate: true})
+
+const handleImageUpload = (event: Event) => {
+  const file = (event.target as HTMLInputElement).files?.[0]
+  if (file) {
+    const reader = new FileReader()
+    reader.onload = () => {
+      editableMetaData.value.coverUrl = reader.result as string
+    }
+    reader.readAsDataURL(file)
+  }
+}
+
+const saveChanges = () => {
+  closeModal()
+  setTimeout(() => {
+    emit('save', editableMetaData.value)
+  }, 300)
+}
+
+
+const closeModal = () => {
+  isClosing.value = true
+}
+
+const handleAnimationEnd = () => {
+  if (isClosing.value) {
+    emit('close')
+    isClosing.value = false
+  }
+}
 </script>
 
 <style scoped>

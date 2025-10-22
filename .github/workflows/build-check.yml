@@ -1,0 +1,40 @@
+name: Build Check
+
+on:
+  workflow_dispatch: # manually trigger if you want
+    inputs:
+      branch:
+        description: 'Branch to test build'
+        required: true
+        default: 'dependabot/npm_and_yarn/...'
+  push:
+    branches:
+      - 'dependabot/**' # optional: auto-run on Dependabot PRs
+  pull_request: # also runs on PRs (optional but recommended)
+    branches:
+      - master
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.branch || github.head_ref || github.ref_name }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+
+      - name: Run tests
+        run: npm test
+        continue-on-error: false # fail if tests fail

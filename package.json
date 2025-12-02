@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "browser-id3-writer": "^6.3.1",
-    "esbuild": "^0.25.11",
+    "esbuild": "^0.27.0",
     "music-metadata": "^11.9.0",
     "vue": "^3.5.22",
     "vue-router": "^4.6.3"
